@@ -1,0 +1,29 @@
+{
+  "name" : "connect-transforms",
+  "version" : "1.4.0",
+  "title" : "connect-transformations",
+  "description" : "A collection of SMTs (single message transforms) for use with Kafka\nConnect. Includes the following:\n\n<p><b>ExtractTopic</b>: Extract data from a message or its headers,\nand use it as the topic name. Can either use the entire key/value\n(which should be a string), or use a field from a map or struct.\nUse the concrete transformation type designed for the\nrecord key\n(<code>io.confluent.connect.transforms.ExtractTopic$Key</code>) or\nvalue\n(<code> io.confluent.connect.transforms.ExtractTopic$Value</code>) or\nheader\n(<code> io.confluent.connect.transforms.ExtractTopic$Header</code>).\n\n<p><b>Drop</b>: Drop either the key or value from a message,\nsetting it to null.\nUse the concrete transformation type designed for the record key\n(<code>io.confluent.connect.transforms.Drop$Key</code>) or value\n(<code>io.confluent.connect.transforms.Drop$Value</code>).\n\n<p><b>TombstoneHandler</b>: Manage tombstone records. A tombstone\nrecord is defined as a record with the entire value field being\nnull, whether or not it has a value schema. Can be configured to\neither allow tombstone records to pass through but with a log\nmessage, or to drop tombstone records completely.\n\n<p><b>MessageTimestampRouter</b>: Update the record's topic field as\na function of the original topic value and the record's timestamp\nfield.\nThis is useful for sink connectors, because the topic field often\ndetermines the equivalent entity name in the destination system (for\nexample, a database table or search index name). This SMT extracts\nthe timestamp from the message's specified field, which is\nespecially useful for log data in which the timestamp is stored as a\nfield in the message.\n\n<p><b>Filter</b>: Include or drop records that match a JSONpath-based\npredicate.\nUse the concrete transformation type designed for the record key\n(<code>io.confluent.connect.transforms.Filter$Key</code>) or value\n(<code>io.confluent.connect.transforms.Filter$Value</code>).",
+  "owner" : {
+    "username" : "confluentinc",
+    "name" : "Confluent, Inc."
+  },
+  "support" : {
+    "summary" : "These transformations are <a href=\"https://www.confluent.io/subscription/\">supported by Confluent</a> as part of a\n<a href=\"https://www.confluent.io/product/confluent-platform/\">Confluent Platform</a> subscription.",
+    "logo" : "assets/confluent.png"
+  },
+  "tags" : [ "transform", "field", "topic" ],
+  "features" : {
+    "supported_encodings" : [ "any" ],
+    "single_message_transforms" : true,
+    "confluent_control_center_integration" : true,
+    "kafka_connect_api" : true
+  },
+  "documentation_url" : "https://docs.confluent.io/current/connect/transforms/index.html",
+  "docker_image" : { },
+  "license" : [ {
+    "name" : "Confluent Software License",
+    "url" : "https://www.confluent.io/software-evaluation-license"
+  } ],
+  "component_types" : [ "transform" ],
+  "release_date" : "2021-01-07"
+}
