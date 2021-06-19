@@ -40,3 +40,9 @@ make setup-db
 ```
 make purge-all
 ```
+
+### How to populate tables with fake data
+```
+make populate-tables
+```
+This will generate 10 users with 10 random todo`s

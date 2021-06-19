@@ -8,6 +8,7 @@ const validator = require('./validator')
 const kafka = require('./kafka')
 const application = require('./app/index')
 const users = require('./app/users')
+const todos = require('./app/todos')
 const repositories = require('./repositories')
 
 const rawModules = [
@@ -20,6 +21,7 @@ const rawModules = [
   application,
   users,
   repositories,
+  todos,
 ]
 
 const container = createContainer()

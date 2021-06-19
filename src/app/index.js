@@ -12,9 +12,12 @@ function application ({
     await postgresDatabase.start()
 
     const {
-      userTopic,
+      usersTopic,
+      todosTopic,
     } = config.kafka.app
-    createKafkaConsumer.start({ consumerTopic: userTopic })
+
+    createKafkaConsumer.start({ consumerTopic: usersTopic })
+    createKafkaConsumer.start({ consumerTopic: todosTopic })
   }
 
   async function stop () {

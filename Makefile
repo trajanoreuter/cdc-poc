@@ -1,6 +1,6 @@
-run-dev:
+setup-app:
 	@docker-compose up --build cdc-poc
-.PHONY: run-dev
+.PHONY: setup-app
 
 database:
 	@docker-compose up -d postgres
@@ -23,8 +23,12 @@ setup-connectors:
 	./scripts/connectors/debezium.sh
 .PHONY: setup-connectors
 
-setup-all: setup-db setup-kafka-ecosystem setup-connectors
+setup-all: setup-db setup-kafka-ecosystem setup-connectors setup-app
 .PHONY: setup-all
+
+populate-tables:
+	@docker-compose run --rm cdc-poc npm run script
+.PHONY: populate-tables
 
 psql:
 	@docker-compose exec postgres psql user=postgres

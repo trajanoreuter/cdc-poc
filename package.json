@@ -9,7 +9,8 @@
     "test": "NODE_ENV=test node index.js",
     "prd": "NODE_ENV=production node index.js",
     "lint": "eslint . --ext .js",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize db:migrate",
+    "script": "node script.js"
   },
   "engines": {
     "node": ">=12.22.1"
