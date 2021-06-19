@@ -54,5 +54,3 @@ COPY --from=build /usr/lib/postgresql/$PG_MAJOR/lib/decoderbufs.so /usr/lib/post
 COPY --from=build /usr/share/postgresql/$PG_MAJOR/extension/decoderbufs.control /usr/share/postgresql/$PG_MAJOR/extension/
 
 COPY ./config/postgresql.conf.sample /usr/share/postgresql/postgresql.conf.sample
-
-COPY ./docker-entrypoint-initdb.d /docker-entrypoint-initdb.d

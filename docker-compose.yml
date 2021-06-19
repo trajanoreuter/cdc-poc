@@ -1,6 +1,21 @@
 version: '2.2'
 
 services:
+  cdc-poc:
+    container_name: cdc-poc
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /code
+    volumes:
+      - ./:/code
+      - /code/node_modules
+    command: "npm run dev"
+    networks:
+      - cdc
+
   postgres:
     hostname: postgres
     container_name: postgres
@@ -13,8 +28,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
        - 5432:5432
-    volumes:
-      - ./postgres/queries/create-table.sql:/docker-entrypoint-initdb.d/z99_dump.sql
+    networks:
+      - cdc
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
@@ -25,6 +40,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - cdc
 
   broker:
     image: confluentinc/cp-kafka:6.2.0
@@ -47,8 +64,10 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: 'true'
     healthcheck:
       test: ["CMD-SHELL", "echo dump | nc zookeeper 2181 | grep brokers"]
-      interval: 10s
+      interval: 20s
       retries: 5
+    networks:
+      - cdc
 
   schema-registry:
     image: confluentinc/cp-schema-registry:6.2.0
@@ -62,6 +81,8 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+    networks:
+      - cdc
 
   ksqldb-server:
     image: confluentinc/cp-ksqldb-server:5.5.4
@@ -96,15 +117,20 @@ services:
       KSQL_CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       KSQL_CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
       KSQL_CONNECT_PLUGIN_PATH: "/usr/share/kafka/plugins"
+    networks:
+      - cdc
 
   ksqldb-cli:
-      image: confluentinc/cp-ksql-cli:5.4.3
-      container_name: ksqldb-cli
-      depends_on:
-        - broker
-        - ksqldb-server
-      entrypoint: /bin/sh
-      tty: true
+    image: confluentinc/cp-ksql-cli:5.4.3
+    container_name: ksqldb-cli
+    depends_on:
+      - broker
+      - ksqldb-server
+    entrypoint: /bin/sh
+    tty: true
+    networks:
+      - cdc
+
 
   connect:
     image: confluentinc/cp-kafka-connect
@@ -133,6 +159,8 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
       CONNECT_PLUGIN_PATH: "/usr/share/kafka/plugins"
+    networks:
+      - cdc
 
   akhq:
     image: tchiotludo/akhq
@@ -150,9 +178,15 @@ services:
                   url: "http://connect:8083"
     ports:
       - 8080:8080
+    networks:
+      - cdc
     links:
       - broker
       - schema-registry
+
+networks:
+  cdc:
+    driver: bridge
 
 volumes:
   zookeeper-data:

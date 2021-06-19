@@ -36,9 +36,6 @@ make setup-connectors
 make setup-db
 ```
 
-Note: You can configure more initial tables changing the file
-`https://github.com/trajanoreuter/cdc-poc/blob/main/postgres/queries/create-table.sql`
-
 ### Remove all docker images and volumes
 ```
 make purge-all

@@ -1,5 +1,17 @@
-setup-db:
+run-dev:
+	@docker-compose up --build cdc-poc
+.PHONY: run-dev
+
+database:
 	@docker-compose up -d postgres
+	@sleep 3
+.PHONY: database
+
+migrate:
+	@docker-compose run --rm cdc-poc npm run migrate
+.PHONY: migrate
+
+setup-db: database migrate
 .PHONY: setup-db
 
 setup-kafka-ecosystem:

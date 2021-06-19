@@ -16,7 +16,7 @@ curl -i -X POST \
         "database.password": "postgres",
         "database.dbname": "postgres",
         "database.server.name": "test",
-        "table.include.list": "public.test_table_one, public.test_table_two",
+        "table.include.list": "public.Users",
         "database.history.kafka.bootstrap.servers": "http://broker:9092",
         "database.history.kafka.topic": "schema.changes.test.cdc",
         "include.schema.changes": "true",

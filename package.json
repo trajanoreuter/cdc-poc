@@ -1,0 +1,51 @@
+{
+  "name": "cdc-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test node index.js",
+    "prd": "NODE_ENV=production node index.js",
+    "lint": "eslint . --ext .js",
+    "migrate": "sequelize db:migrate"
+  },
+  "engines": {
+    "node": ">=12.22.1"
+  },
+  "keywords": [
+    "cdc",
+    "kafka",
+    "debezium",
+    "ksql",
+    "schema-registry",
+    "postgres",
+    "akhq"
+  ],
+  "author": "Trajano Reuter",
+  "license": "MIT",
+  "dependencies": {
+    "@kafkajs/confluent-schema-registry": "3.0.1",
+    "ajv": "8.6.0",
+    "ajv-errors": "3.0.0",
+    "awilix": "4.3.4",
+    "aws-sdk": "2.921.0",
+    "dotenv": "10.0.0",
+    "escriba": "2.10.0",
+    "faker": "5.5.3",
+    "kafkajs": "1.15.0",
+    "log4js": "6.3.0",
+    "pg": "8.6.0",
+    "ramda": "0.27.1",
+    "sequelize": "6.6.2",
+    "sequelize-cli": "6.2.0"
+  },
+  "devDependencies": {
+    "eslint": "7.27.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-plugin-import": "2.23.4",
+    "jest": "27.0.4",
+    "nodemon": "2.0.7"
+  }
+}
