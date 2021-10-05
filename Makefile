@@ -34,6 +34,10 @@ psql:
 	@docker-compose exec postgres psql user=postgres
 .PHONY: psql
 
+sqlserver:
+	@docker exec -it sqlserver bash -c '/opt/mssql-tools/bin/sqlcmd -U sa -P P@ssw0rd'
+.PHONY: sqlserver
+
 ksql:
 	@docker exec -it ksqldb-cli ksql http://ksqldb-server:8088
 .PHONY: ksql

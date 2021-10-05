@@ -31,6 +31,20 @@ services:
     networks:
       - cdc
 
+  sqlserver:
+    hostname: sqlserver
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - 1433:1433
+    environment:
+      MSSQL_AGENT_ENABLED: "true"
+      MSSQL_PID: Standard
+      SA_PASSWORD: P@ssw0rd
+      ACCEPT_EULA: "Y"
+    networks:
+      - cdc
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     hostname: zookeeper
@@ -131,7 +145,6 @@ services:
     networks:
       - cdc
 
-
   connect:
     image: confluentinc/cp-kafka-connect
     container_name: connect
@@ -143,6 +156,7 @@ services:
     links:
       - broker
       - postgres
+      - sqlserver
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "broker:9092"
       CONNECT_GROUP_ID: "connect"
