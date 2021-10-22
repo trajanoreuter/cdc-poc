@@ -23,7 +23,7 @@ setup-connectors:
 	./scripts/connectors/debezium.sh
 .PHONY: setup-connectors
 
-setup-all: setup-db setup-kafka-ecosystem setup-connectors setup-app
+setup-all: setup-db setup-kafka-ecosystem setup-connectors setup-app setup-controlcenter
 .PHONY: setup-all
 
 populate-tables:
@@ -49,6 +49,11 @@ stop:
 down:
 	@docker-compose down
 .PHONY: down
+
+setup-controlcenter:
+	@docker-compose up -d control-center
+	@sleep 3
+.PHONY: setup-controlcenter
 
 purge-all:
 	@docker ps -aq | xargs docker stop
