@@ -198,6 +198,36 @@ services:
       - broker
       - schema-registry
 
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:6.2.1
+    hostname: control-center
+    container_name: control-center
+    depends_on:
+      - broker
+      - schema-registry
+      - connect
+      - ksqldb-server
+    networks:
+      - cdc
+    links:
+      - broker
+      - schema-registry
+
+    ports:
+      -   9021:9021
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:9092'
+      CONTROL_CENTER_CONNECT_CONNECT-DEFAULT_CLUSTER: 'connect:8083'
+      CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
+      CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+
 networks:
   cdc:
     driver: bridge
