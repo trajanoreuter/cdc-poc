@@ -31,20 +31,6 @@ services:
     networks:
       - cdc
 
-  sqlserver:
-    hostname: sqlserver
-    container_name: sqlserver
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    ports:
-      - 1433:1433
-    environment:
-      MSSQL_AGENT_ENABLED: "true"
-      MSSQL_PID: Standard
-      SA_PASSWORD: P@ssw0rd
-      ACCEPT_EULA: "Y"
-    networks:
-      - cdc
-
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     hostname: zookeeper
@@ -156,7 +142,6 @@ services:
     links:
       - broker
       - postgres
-      - sqlserver
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "broker:9092"
       CONNECT_GROUP_ID: "connect"
@@ -178,6 +163,7 @@ services:
 
   akhq:
     image: tchiotludo/akhq
+    container_name: akhq
     environment:
       AKHQ_CONFIGURATION: |
         akhq:
@@ -197,7 +183,6 @@ services:
     links:
       - broker
       - schema-registry
-
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.2.1

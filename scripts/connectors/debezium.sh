@@ -31,31 +31,3 @@ curl -i -X POST \
       }
     }
     '
-
-curl -i -X POST \
-    -H "Accept:application/json" \
-    -H  "Content-Type:application/json" \
-    http://localhost:8083/connectors/ -d '
-    {
-      "name": "sqlserver.debezium",
-      "config": {
-        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-        "tasks.max": "1",
-        "database.server.name": "sqlserver",
-        "database.hostname": "sqlserver",
-        "database.port": "1433",
-        "database.user": "sa",
-        "database.password": "P@ssw0rd",
-        "database.dbname": "db",
-        "database.history.kafka.bootstrap.servers": "http://broker:9092",
-        "database.history.kafka.topic": "schema.changes.sqlserver.cdc",
-        "include.schema.changes": "true",
-        "max.queue.size": "81290",
-        "max.batch.size": "20480",
-        "key.converter": "io.confluent.connect.avro.AvroConverter",
-        "value.converter": "io.confluent.connect.avro.AvroConverter",
-        "key.converter.schema.registry.url": "http://schema-registry:8081",
-        "value.converter.schema.registry.url": "http://schema-registry:8081"
-      }
-    }
-    '
