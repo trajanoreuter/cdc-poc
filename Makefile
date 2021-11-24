@@ -60,3 +60,7 @@ purge-all:
 	@docker ps -aq | xargs docker rm
 	@docker images -q | xargs docker rmi
 .PHONY: purge-all
+
+logs:
+	@docker-compose logs -f cdc-poc
+.PHONY: logs
