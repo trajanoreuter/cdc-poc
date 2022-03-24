@@ -85,7 +85,7 @@ services:
       - cdc
 
   ksqldb-server:
-    image: confluentinc/cp-ksqldb-server:5.5.4
+    image: confluentinc/cp-ksqldb-server:0.24.0
     hostname: ksqldb-server
     container_name: ksqldb-server
     depends_on:

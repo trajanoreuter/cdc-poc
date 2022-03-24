@@ -1,9 +1,9 @@
 #!/bin/bash
 
-curl -i -X POST \
-    -H "Accept:application/json" \
-    -H  "Content-Type:application/json" \
-    http://localhost:8083/connectors/ -d '
+status=000
+
+configureDebezium () {
+  response_code=$(curl --write-out '%{http_code}' --silent --output /dev/null -XPOST localhost:8083/connectors/ -H "content-type: application/json" -d '
     {
       "name": "postgres.debezium",
       "config": {
@@ -30,4 +30,16 @@ curl -i -X POST \
         "snapshot.mode": "exported"
       }
     }
-    '
+  ');
+
+  echo "$response_code"
+}
+
+while [ "$status" != 201 ] | [ "$status" != 409 ];
+  do
+    echo "Trying to configure debezium"
+    status=$(configureDebezium)
+    sleep 5
+  done
+
+echo "debezium configured"
